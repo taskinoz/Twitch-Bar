@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Title</title>
+      <style>
+        body{
+          padding: 0;
+          border: 0;
+          margin: 0;
+        }
+        .container{
+          font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+          margin: 0 5%;
+        }
+        .twitch-bar{
+          display: inline;
+          background: #6441A4;
+          padding: 20px 0;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          text-align: center;
+          color: #fff;
+          font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+          font-size: 20px;
+          line-height: 38px;
+        }
+        .twitch-bar a{
+          color: #fff;
+          padding: 6px 10px;
+          border: 1px solid #fff;
+          border-radius: 5px;
+          text-decoration: none;
+          margin: 0 10px;
+          word-break: keep-all;
+          display: inline-block;
+          transition: 0.4s;
+        }
+        .twitch-bar a:hover{
+          background: #fff;
+          color: #6441A4;
+        }
+        .hidden{
+          bottom: -100px;
+        }
+        .online{
+          animation: online 2s;
+        }
+        .twitch-bar .twitch-close{
+          position: absolute;
+          right: 20px;
+          top: 40%;
+          cursor: pointer;
+        }
+        @keyframes online {
+          from{bottom: -100px;}
+          to{bottom: 0px;}
+        }
+      </style>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          var data;
+          $(".twitch-bar").addClass("hidden");
+          $.ajax({
+            url: "twitch.php",
+            context: document.body,
+            data: "data"
+          }).done(function(data) {
+            data = JSON.parse(data);
+            if (data._total==1 && data.streams[0].stream_type=="live"){
+              $(".twitch-bar").html('<i class="fa fa-twitch" aria-hidden="true"></i> I\'m live playing '+data.streams[0].channel.game+' <a href="'+data.streams[0].channel.url+'">Watch Now</a><i class="fa fa-times twitch-close" aria-hidden="true"></i>');
+              $(".twitch-bar").addClass("online");
+              $(".twitch-bar").removeClass("hidden");
+            }
+            else {
+              $(".twitch-bar").remove();
+            }
+            $(".twitch-close").on('click',function () {
+              $(".twitch-bar").remove();
+            });
+          });
+        });
+      </script>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Generic Website</h1>
+        <h2>Title</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="twitch-bar"></div>
+    </body>
+  </html>
